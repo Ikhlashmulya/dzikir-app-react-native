@@ -25,6 +25,16 @@ export default function DzikirLayout({
     setCounters(newCounters);
   };
 
+  const increaseFontSize = () => {
+    if (fontSize >= 30) return;
+    setFontSize((prev) => prev + 2);
+  };
+
+  const decreaseFontSize = () => {
+    if (fontSize <= 14) return;
+    setFontSize((prev) => prev - 2);
+  };
+
   return (
     <View style={styles.container}>
       <PagerView
@@ -40,8 +50,11 @@ export default function DzikirLayout({
               <TouchableOpacity>
                 <Icon name="volume-up" size={24} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setFontSize((prev) => prev + 2)}>
-                <Icon name="text-fields" size={24} />
+              <TouchableOpacity onPress={increaseFontSize}>
+                <Icon name="zoom-in" size={24} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={decreaseFontSize}>
+                <Icon name="zoom-out" size={24} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setShowLatin(!showLatin)}>
                 <Icon name="menu-book" size={24} />
