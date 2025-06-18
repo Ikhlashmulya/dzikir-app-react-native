@@ -15,6 +15,6 @@ const dzikirList = [
   },
 ];
 
-export default function DzikirPagiScreen() {
+export default function DzikirPetangScreen() {
   return <DzikirLayout dzikirList={dzikirList} />;
 }

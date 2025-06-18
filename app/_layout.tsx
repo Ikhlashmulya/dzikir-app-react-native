@@ -18,6 +18,15 @@ export default function RootLayout() {
           },
         }}
       />
+      <Stack.Screen
+        name="dzikir-petang/index"
+        options={{
+          title: "Dzikir Petang",
+          headerStyle: {
+            backgroundColor: "#E0F4F2",
+          },
+        }}
+      />
     </Stack>
   );
 }

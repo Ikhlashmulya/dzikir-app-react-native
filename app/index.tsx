@@ -18,7 +18,7 @@ const menuItems = [
   {
     label: "Dzikir Petang",
     icon: require("@/assets/images/petang.png"),
-    onclick: () => alert("clicked"),
+    onclick: () => router.navigate("/dzikir-petang"),
   },
 ];
 
