@@ -1,14 +1,17 @@
 import { Dzikir } from "@/types/dzikir";
+import { setStringAsync } from "expo-clipboard";
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import PagerView from "react-native-pager-view";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-export default function DzikirLayout({
-  dzikirList,
-}: {
-  dzikirList: Dzikir[];
-}) {
+export default function DzikirLayout({ dzikirList }: { dzikirList: Dzikir[] }) {
   const [showLatin, setShowLatin] = useState(true);
   const [fontSize, setFontSize] = useState(20);
   const [counters, setCounters] = useState(dzikirList.map(() => 0));
@@ -28,6 +31,15 @@ export default function DzikirLayout({
   const decreaseFontSize = () => {
     if (fontSize <= 14) return;
     setFontSize((prev) => prev - 2);
+  };
+
+  const copyToClipboard = async (text: string) => {
+    await setStringAsync(text);
+    ToastAndroid.showWithGravity(
+      "Copied to clipboard",
+      ToastAndroid.SHORT,
+      ToastAndroid.BOTTOM
+    );
   };
 
   return (
@@ -64,7 +76,13 @@ export default function DzikirLayout({
               <TouchableOpacity onPress={() => setShowLatin(!showLatin)}>
                 <Icon name="menu-book" size={24} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  copyToClipboard(
+                    item.arab + "\n" + item.latin + "\n" + item.arti
+                  )
+                }
+              >
                 <Icon name="content-copy" size={24} />
               </TouchableOpacity>
             </View>
