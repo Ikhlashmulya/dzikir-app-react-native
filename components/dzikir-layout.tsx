@@ -1,17 +1,13 @@
+import { Dzikir } from "@/types/dzikir";
 import React, { useState } from "react";
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function DzikirLayout({
   dzikirList,
 }: {
-  dzikirList: Record<string, string>[];
+  dzikirList: Dzikir[];
 }) {
   const [showLatin, setShowLatin] = useState(true);
   const [fontSize, setFontSize] = useState(20);
@@ -98,24 +94,27 @@ export default function DzikirLayout({
               </Text>
             </ScrollView>
 
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 20,
-                justifyContent: "center",
-                marginBottom: 20
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => updateCounter(index, -counters[index])}
+            {item.jumlah > 1 && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 20,
+                  justifyContent: "center",
+                  marginBottom: 20,
+                }}
               >
-                <Icon name="refresh" size={30} />
-              </TouchableOpacity>
-              <Text style={{fontSize: 20}}>{counters[index]}</Text>
-              <TouchableOpacity onPress={() => updateCounter(index, 1)}>
-                <Icon name="add" size={30} />
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity
+                  onPress={() => updateCounter(index, -counters[index])}
+                >
+                  <Icon name="refresh" size={30} />
+                </TouchableOpacity>
+                <Text style={{ fontSize: 20 }}>{counters[index]}</Text>
+                <TouchableOpacity onPress={() => updateCounter(index, 1)}>
+                  <Icon name="add" size={30} />
+                </TouchableOpacity>
+              </View>
+            )}
+
             <View
               style={{
                 alignItems: "center",
