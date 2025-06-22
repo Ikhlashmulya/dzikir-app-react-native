@@ -127,7 +127,12 @@ export default function DzikirLayout({ dzikirList }: { dzikirList: Dzikir[] }) {
                   <Icon name="refresh" size={30} />
                 </TouchableOpacity>
                 <Text style={{ fontSize: 20 }}>{counters[index]}</Text>
-                <TouchableOpacity onPress={() => updateCounter(index, 1)}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (counters[index] === item.jumlah) return;
+                    updateCounter(index, 1);
+                  }}
+                >
                   <Icon name="add" size={30} />
                 </TouchableOpacity>
               </View>
