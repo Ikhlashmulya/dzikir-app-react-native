@@ -4,4 +4,5 @@ export type Dzikir = {
   latin: string;
   arti: string;
   jumlah: number;
+  audio: any;
 };

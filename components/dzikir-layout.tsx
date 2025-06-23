@@ -1,4 +1,5 @@
 import { Dzikir } from "@/types/dzikir";
+import { useAudioPlayer } from "expo-audio";
 import { setStringAsync } from "expo-clipboard";
 import React, { useState } from "react";
 import {
@@ -16,6 +17,8 @@ export default function DzikirLayout({ dzikirList }: { dzikirList: Dzikir[] }) {
   const [fontSize, setFontSize] = useState(20);
   const [counters, setCounters] = useState(dzikirList.map(() => 0));
   const [currentPage, setCurrentPage] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const player = useAudioPlayer();
 
   const updateCounter = (index: any, value: any) => {
     const newCounters = [...counters];
@@ -42,12 +45,29 @@ export default function DzikirLayout({ dzikirList }: { dzikirList: Dzikir[] }) {
     );
   };
 
+  const playAudio = (audio: any) => {
+    if (isPlaying) {
+      stopAudio();
+    } else {
+      player.replace(audio);
+      player.play();
+      setIsPlaying(true);
+    }
+  };
+  
+  const stopAudio = () => {
+    player.pause();
+    player.remove();
+    setIsPlaying(false);
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "#E0F4F2" }}>
       <PagerView
         style={{ flex: 1, marginBottom: 32 }}
         initialPage={0}
         onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
+        onPageScroll={() => stopAudio()}
       >
         {dzikirList.map((item, index) => (
           <View key={index} style={{ padding: 16 }}>
@@ -64,7 +84,7 @@ export default function DzikirLayout({ dzikirList }: { dzikirList: Dzikir[] }) {
                 marginVertical: 10,
               }}
             >
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => playAudio(item.audio)}>
                 <Icon name="volume-up" size={24} />
               </TouchableOpacity>
               <TouchableOpacity onPress={increaseFontSize}>
